@@ -27,9 +27,9 @@ NUM_CLASSES = 1
 
 # initialize learning rate, number of epochs to train for, the batch size, and the number of workers
 INIT_LR = 0.0001
-NUM_EPOCHS = 2
-BATCH_SIZE = 2
-NUM_WORKERS = 4
+NUM_EPOCHS = 15
+BATCH_SIZE = 3
+NUM_WORKERS = 8
 
 # Define the input image dimensions
 INPUT_IMAGE_WIDTH = 640

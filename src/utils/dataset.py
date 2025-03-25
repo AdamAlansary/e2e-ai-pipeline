@@ -14,8 +14,8 @@ class SegmentationDataset(Dataset):
 		df = pd.DataFrame(df)
 
 		# Extract image and mask paths from respective DataFrame columns
-		self.image_paths = df['images'].values[:(len(df['images'].values) // 10)]
-		self.mask_paths = df['masks'].values[:(len(df['masks'].values) // 10)]
+		self.image_paths = df['images'].values#[:(len(df['images'].values) // 10)]
+		self.mask_paths = df['masks'].values#[:(len(df['masks'].values) // 10)]
 
 		self.image_transforms = cfg.IMAGE_TRANSFORMS
 		self.mask_transforms = cfg.MASK_TRANSFORMS

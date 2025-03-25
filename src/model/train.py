@@ -8,8 +8,8 @@ from lightning.pytorch.callbacks import ModelCheckpoint
 
 if __name__ == '__main__':
     # Run this in terminal first: mlflow server --host 127.0.0.1 --port 8080
-    mlf_logger = MLFlowLogger(experiment_name="Human Segmentation Test", run_name="Test run 1 (266 images)", log_model=False, tracking_uri="http://127.0.0.1:8080")
-    # mlf_logger = MLFlowLogger(experiment_name="Binary Segmentation Finetuning", run_id="320bc56838e3412ca8dbc340b2a6c8f9", log_model=False, tracking_uri="http://127.0.0.1:8080")
+    # mlf_logger = MLFlowLogger(experiment_name="Human Segmentation Test", run_name="Test run 1 (All images)", log_model=False, tracking_uri="http://127.0.0.1:8080")
+    mlf_logger = MLFlowLogger(experiment_name="Human Segmentation Test", run_id="5ce23bd2a2de4faa9fad1fbe110fe389", log_model=False, tracking_uri="http://127.0.0.1:8080")
 
     checkpoint_callback = ModelCheckpoint(dirpath=f"mlruns/{mlf_logger.experiment_id}/{mlf_logger.run_id}/artifacts",
                                           filename="human-seg-{epoch}-{validation_loss:.5f}",
@@ -28,5 +28,5 @@ if __name__ == '__main__':
                         # precision=16,
                         devices=-1)
 
-    trainer.fit(model=model_lightning)
-    # trainer.fit(model=model, ckpt_path="mlruns/163865829670612271/320bc56838e3412ca8dbc340b2a6c8f9/artifacts/pid-binary-segmentation-epoch=9-validation_loss=0.01625.ckpt")
+    # trainer.fit(model=model_lightning)
+    trainer.fit(model=model_lightning, ckpt_path="mlruns/623587088750605126/5ce23bd2a2de4faa9fad1fbe110fe389/artifacts/human-seg-epoch=4-validation_loss=0.11332.ckpt")

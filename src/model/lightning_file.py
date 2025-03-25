@@ -96,7 +96,7 @@ class HumanSegmentation(pl.LightningModule):
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=cfg.INIT_LR)
-        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2, threshold=1e-4, min_lr=1e-6, cooldown=1)
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=3, threshold=1e-4, min_lr=1e-6, cooldown=1, verbose=True)
         return {"optimizer": optimizer, "lr_scheduler": scheduler, "monitor": "validation_loss"}
 
 
