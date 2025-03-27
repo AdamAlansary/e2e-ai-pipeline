@@ -7,9 +7,6 @@ from src.model.model_deeplabv3 import deeplabv3
 from src.model.lightning_file import HumanSegmentation
 
 
-video_input_file_name = "data/test_videos/man_texting.mp4"
-
-
 def overlay_mask(image, mask, alpha=0.5):
     # Create an image of the same size as the original image, filled with green
     green_overlay = np.zeros_like(image, dtype=np.uint8)
@@ -33,35 +30,30 @@ def overlay_mask(image, mask, alpha=0.5):
     return overlaid_image
 
 
+s = 0
+if len(sys.argv) > 1:
+    s = sys.argv[1]
+
+source = cv2.VideoCapture(s)
+
+win_name = "Camera Preview"
+cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
+
 model = deeplabv3()
 checkpoint = "src/model/model_files/human-seg-epoch=12-validation_loss=0.06981.ckpt"
 inference_model = HumanSegmentation.load_from_checkpoint(checkpoint_path=checkpoint, model=model)
 inference_model.eval()
 inference_model.to("cuda")
 
-# Read video
-video = cv2.VideoCapture(video_input_file_name)
-
-# Exit if video not opened
-if not video.isOpened():
-    print("Could not open video")
-    sys.exit()
-else:
-    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-video_output_file_name = f"data/test_videos/man_texting_seg.mp4"
-fps = video.get(cv2.CAP_PROP_FPS)
-video_out = cv2.VideoWriter(video_output_file_name, cv2.VideoWriter_fourcc(*"mp4v"), fps, (width, height))
-
-i = 1
-while True:
+while cv2.waitKey(1) != 27:
     torch.cuda.empty_cache()
-    ok, frame = video.read()
 
+    ok, frame = source.read()
     if not ok:
         break
-    
+
+    frame = cv2.flip(frame, 1)
+
     # Prepare frame to be inputted into model
     input_image = cfg.IMAGE_TRANSFORMS(frame)
     input_image = input_image.unsqueeze(0).to("cuda") # create a mini-batch as expected by the model
@@ -83,16 +75,10 @@ while True:
 
     # Overlay mask over image
     overlaid_image = overlay_mask(frame, resized_mask)
-
-    # Write frame to video
-    video_out.write(overlaid_image)
+    
+    cv2.imshow(win_name, overlaid_image)
 
     del input_image, logits, probabilities, binary_mask, resized_mask, overlaid_image
 
-    print(f"Frame {i} processed")
-    i+=1
-
-video.release()
-video_out.release()
-
-# TODO: Need to train model on blurry and low quality images, since people that are not in focus are not recognized
+source.release()
+cv2.destroyWindow(win_name)

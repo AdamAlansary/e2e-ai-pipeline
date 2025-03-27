@@ -53,7 +53,7 @@ MASK_TRANSFORMS = v2.Compose([
 ])
 
 # Define threshold to filter weak predictions
-THRESHOLD = 0.5
+THRESHOLD = 0.4
 
 # Define the path to the base output directory
 BASE_OUTPUT = "<BASE_OUTPUT_PLACEHOLDER>"
