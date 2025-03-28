@@ -36,8 +36,9 @@ venv.bak/
 poetry.lock
 pyproject.toml
 
-# Data directory in project root
-/data/
+# Data images and masks
+data/human_segmentation_kaggle/images
+data/human_segmentation_kaggle/masks
 
 # Model test videos
 test_videos/

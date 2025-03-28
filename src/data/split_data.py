@@ -10,8 +10,8 @@ rng = np.random.default_rng(cfg.SEED)
 df = pd.read_csv(cfg.CSV_PATH)
 df = pd.DataFrame(df)
 
-image_paths = np.array(list(map(lambda x: f"{cfg.BASE_DATASET_PATH}/{x}", df['images'].values)))
-mask_paths = np.array(list(map(lambda x: f"{cfg.BASE_DATASET_PATH}/{x}", df['masks'].values)))
+image_paths = np.array(list(map(lambda x: f"{cfg.BASE_PATH}/{x}", df['images'].values)))
+mask_paths = np.array(list(map(lambda x: f"{cfg.BASE_PATH}/{x}", df['masks'].values)))
 
 num_samples = len(image_paths)
 
