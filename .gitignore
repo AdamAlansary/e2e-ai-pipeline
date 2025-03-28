@@ -36,8 +36,11 @@ venv.bak/
 poetry.lock
 pyproject.toml
 
-# Data
-data/
+# Data directory in project root
+/data/
+
+# Model test videos
+test_videos/
 
 # MLflow and PyTorch
 mlruns

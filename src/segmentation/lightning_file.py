@@ -1,9 +1,9 @@
 import torch
-import config.config as cfg
 import lightning.pytorch as pl
+import src.segmentation.config as cfg
 from torch.nn import BCEWithLogitsLoss
 from torch.utils.data import DataLoader
-from src.utils.dataset import SegmentationDataset
+from src.data.dataset import SegmentationDataset
 
 
 class HumanSegmentation(pl.LightningModule):
@@ -25,7 +25,7 @@ class HumanSegmentation(pl.LightningModule):
         loss = loss_fn(outputs['out'], masks)
 
         self.log("training_loss", loss)
-        print("   training batch " + str(batch_idx) + " loss: " + str(loss.item()))
+        print(f"      training batch {batch_idx} loss: {loss.item()}      current learning rate: {self.lr_schedulers().get_last_lr()[0]}")
 
         return loss
 
@@ -38,7 +38,7 @@ class HumanSegmentation(pl.LightningModule):
         loss = loss_fn(outputs['out'], masks)
 
         self.log("validation_loss", loss)
-        print("   validation batch " + str(batch_idx) + " loss: " + str(loss.item()))
+        print(f"      validation batch {batch_idx} loss: {loss.item()}")
 
 
     def test_step(self, batch, batch_idx):
@@ -96,7 +96,7 @@ class HumanSegmentation(pl.LightningModule):
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=cfg.INIT_LR)
-        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=3, threshold=1e-4, min_lr=1e-6, cooldown=1, verbose=True)
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3, threshold=1e-4, min_lr=1e-6, cooldown=1)
         return {"optimizer": optimizer, "lr_scheduler": scheduler, "monitor": "validation_loss"}
 
 

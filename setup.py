@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="webcam_human_seg",  # Replace with your package's name
+    name="human_segmentation",  # Replace with your package's name
     version="0.1",
     packages=find_packages(),
     include_package_data=True,

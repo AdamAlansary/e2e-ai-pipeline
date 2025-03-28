@@ -1,0 +1,8 @@
+[x] Create FastAPI app (use POST not GET)
+[x] Fix project structure
+[] Train model with augmentations
+[] Dockerize code
+[] Add CLI workloads using argparser, such as testing, training, eval, serving (put code to be executed into functions e.g. train.py main)
+[] Clean up and document code, including docstrings and typing (can use the autoDocstring extension)
+[] Add unit, integration, and system tests
+[] Add pre-commit hooks with styling

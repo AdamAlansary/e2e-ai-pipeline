@@ -1,4 +1,4 @@
-import config.config as cfg
+import src.segmentation.config as cfg
 from torchvision.models.segmentation import deeplabv3_resnet50
 from torchvision.models.segmentation.deeplabv3 import DeepLabHead
 

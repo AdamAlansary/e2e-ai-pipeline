@@ -4,10 +4,9 @@ from torchvision.transforms import v2
 
 # Define image and mask paths
 BASE_PATH = "data/human_segmentation_kaggle"
+IMAGE_DATASET_PATH = "data/human_segmentation_kaggle/images"
+MASK_DATASET_PATH = "data/human_segmentation_kaggle/masks"
 CSV_PATH = "data/human_segmentation_kaggle/df.csv"
-BASE_DATASET_PATH = "data/human_segmentation_kaggle/supervisely_person_clean_2667_img"
-IMAGE_DATASET_PATH = "data/human_segmentation_kaggle/supervisely_person_clean_2667_img/images"
-MASK_DATASET_PATH = "data/human_segmentation_kaggle/supervisely_person_clean_2667_img/masks"
 TRAIN_DATASET_CSV = "data/human_segmentation_kaggle/train.csv"
 VAL_DATASET_CSV = "data/human_segmentation_kaggle/val.csv"
 TEST_DATASET_CSV = "data/human_segmentation_kaggle/test.csv"
@@ -54,11 +53,3 @@ MASK_TRANSFORMS = v2.Compose([
 
 # Define threshold to filter weak predictions
 THRESHOLD = 0.4
-
-# Define the path to the base output directory
-BASE_OUTPUT = "<BASE_OUTPUT_PLACEHOLDER>"
-
-# Define the paths for the output serialized model, training plot, and testing image paths
-MODEL_PATH = "<MODEL_PATH_PLACEHOLDER>"
-PLOT_PATH = "<PLOT_PATH_PLACEHOLDER>"
-TEST_PATHS = "<TEST_PATHS_PLACEHOLDER>"

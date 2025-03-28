@@ -1,7 +1,7 @@
 import lightning.pytorch as pl
-from model_deeplabv3 import deeplabv3
-from lightning_file import HumanSegmentation
 from lightning.pytorch.loggers import MLFlowLogger
+from src.segmentation.model_deeplabv3 import deeplabv3
+from src.segmentation.lightning_file import HumanSegmentation
 
 
 if __name__ == '__main__':

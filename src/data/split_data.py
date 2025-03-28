@@ -2,7 +2,7 @@
 import os
 import numpy as np
 import pandas as pd
-import config.config as cfg
+import src.segmentation.config as cfg
 
 # Set seed for reproducibility
 rng = np.random.default_rng(cfg.SEED)
