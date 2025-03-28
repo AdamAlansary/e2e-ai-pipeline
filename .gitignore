@@ -46,3 +46,6 @@ test_videos/
 # MLflow and PyTorch
 mlruns
 lightning_logs
+
+# TODO list
+TODO
