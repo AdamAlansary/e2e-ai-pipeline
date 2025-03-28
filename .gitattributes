@@ -1,3 +1,4 @@
 src/model/model_files/human-seg-epoch=12-validation_loss=0.06981.ckpt filter=lfs diff=lfs merge=lfs -text
 models/human-seg-epoch=12-validation_loss=0.06981.ckpt filter=lfs diff=lfs merge=lfs -text
+*.ckpt filter=lfs diff=lfs merge=lfs -text
 models/*.ckpt filter=lfs diff=lfs merge=lfs -text
