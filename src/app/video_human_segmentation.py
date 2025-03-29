@@ -7,10 +7,11 @@ from src.segmentation.utils import resize_mask, overlay_mask
 from src.segmentation.lightning_file import HumanSegmentation
 
 
-video_input_file_name = "tests/model/test_videos/man_texting.mp4"
+video_input_file_name = "tests/model/test_videos/bellingham.mp4"
 
 model = deeplabv3()
-checkpoint = "models/human-seg-epoch=12-validation_loss=0.06981.ckpt"
+# checkpoint = "models/human-seg-epoch=12-validation_loss=0.06981.ckpt"
+checkpoint = "models/human_segmentation_model_v2.ckpt"
 inference_model = HumanSegmentation.load_from_checkpoint(checkpoint_path=checkpoint, model=model)
 inference_model.eval()
 inference_model.to("cuda")
@@ -26,7 +27,7 @@ else:
     width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-video_output_file_name = f"tests/model/test_videos/man_texting_seg.mp4"
+video_output_file_name = f"tests/model/test_videos/bellingham_seg.mp4" # TODO: Change to use input file name path and just add "_seg"
 fps = video.get(cv2.CAP_PROP_FPS)
 video_out = cv2.VideoWriter(video_output_file_name, cv2.VideoWriter_fourcc(*"mp4v"), fps, (width, height))
 

@@ -10,8 +10,10 @@ from src.segmentation.utils import resize_mask, overlay_mask
 from src.segmentation.lightning_file import HumanSegmentation
 
 
+# Load model
 model = deeplabv3()
-checkpoint = "models/human-seg-epoch=12-validation_loss=0.06981.ckpt"
+# checkpoint = "models/human-seg-epoch=12-validation_loss=0.06981.ckpt"
+checkpoint = "models/human_segmentation_model_v2.ckpt"
 inference_model = HumanSegmentation.load_from_checkpoint(checkpoint_path=checkpoint, model=model)
 inference_model.eval()
 inference_model.to("cuda")

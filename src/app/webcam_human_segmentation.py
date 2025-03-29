@@ -17,7 +17,8 @@ win_name = "Camera Preview"
 cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
 
 model = deeplabv3()
-checkpoint = "models/human-seg-epoch=12-validation_loss=0.06981.ckpt"
+# checkpoint = "models/human-seg-epoch=12-validation_loss=0.06981.ckpt"
+checkpoint = "models/human_segmentation_model_v2.ckpt"
 inference_model = HumanSegmentation.load_from_checkpoint(checkpoint_path=checkpoint, model=model)
 inference_model.eval()
 inference_model.to("cuda")

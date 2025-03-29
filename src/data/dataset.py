@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 
 
 class SegmentationDataset(Dataset):
-	def __init__(self, csv_path):
+	def __init__(self, csv_path, augment=True):
 		super().__init__()
 
 		df = pd.read_csv(csv_path)
@@ -19,19 +19,28 @@ class SegmentationDataset(Dataset):
 
 		self.image_transforms = cfg.IMAGE_TRANSFORMS
 		self.mask_transforms = cfg.MASK_TRANSFORMS
+
+		self.augment = augment
 		
 		
 	def __len__(self):
-		# Return twice the number of samples: one for the original and one for the augmented image
-		return 2 * len(self.image_paths)
+		if self.augment:
+			# If augment = True, return twice the number of samples: one for the original and one for the augmented image
+			return 2 * len(self.image_paths)
+		else:
+			# If augemnt = False, return the original number of samples
+			return len(self.image_paths)
 	
 
 	def __getitem__(self, idx):
-		# Determine whether this sample should be original or augmented.
-		# If idx is less than the number of images, return original.
-		# Otherwise, return the augmented version of the sample at index (idx - len(image_paths)).
-		is_augmented = idx >= len(self.image_paths)
-		real_idx = idx if not is_augmented else idx - len(self.image_paths)
+		# If augmentation is enabled, dataset is doubled: return original samples for indices < len(image_paths)
+		# and return augmented samples for indices >= len(image_paths). Otherwise, only use original images.
+		if self.augment:
+			is_augmented = idx >= len(self.image_paths)
+			real_idx = idx if not is_augmented else idx - len(self.image_paths)
+		else:
+			is_augmented = False
+			real_idx = idx
 
 		image_path = self.image_paths[real_idx]
 		mask_path = self.mask_paths[real_idx]
@@ -40,11 +49,11 @@ class SegmentationDataset(Dataset):
 		image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Swap image channels from BGR to RGB
 		mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)  # Read mask in grayscale mode
 
-		# If this sample is for augmentation, apply additional transformations
+		# If this sample is marked for augmentation, apply additional transformations
 		if is_augmented:
 			image, mask = self.apply_augmentations(image, mask)
 		
-		# Apply the transformations to the image and mask needed by the model
+		# Apply the transformations to the image and mask as needed by the model
 		image = self.image_transforms(image)
 		mask = self.mask_transforms(mask)
 		

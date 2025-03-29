@@ -101,18 +101,18 @@ class HumanSegmentation(pl.LightningModule):
 
 
     def train_dataloader(self):
-        train_data = SegmentationDataset(csv_path=cfg.TRAIN_DATASET_CSV)
+        train_data = SegmentationDataset(csv_path=cfg.TRAIN_DATASET_CSV, augment=True)
         train_dl = DataLoader(train_data, batch_size=cfg.BATCH_SIZE, shuffle=True, num_workers=cfg.NUM_WORKERS, persistent_workers=True)
         return train_dl
 
 
     def val_dataloader(self):
-        val_data = SegmentationDataset(csv_path=cfg.VAL_DATASET_CSV)
+        val_data = SegmentationDataset(csv_path=cfg.VAL_DATASET_CSV, augment=True)
         val_dl = DataLoader(val_data, batch_size=cfg.BATCH_SIZE, shuffle=False, num_workers=cfg.NUM_WORKERS, persistent_workers=True)
         return val_dl
 
 
     def test_dataloader(self):
-        test_data = SegmentationDataset(csv_path=cfg.TEST_DATASET_CSV)
+        test_data = SegmentationDataset(csv_path=cfg.TEST_DATASET_CSV, augment=True)
         test_dl = DataLoader(test_data, batch_size=cfg.BATCH_SIZE, shuffle=False, num_workers=cfg.NUM_WORKERS, persistent_workers=True)
         return test_dl
